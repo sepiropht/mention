@@ -31,15 +31,15 @@ export const Card: React.FC<CardProps> = ({
   return (
     <Box display="flex" padding="15px" border="1px solid #F5F7F9" width="550px">
       <Box padding="10px">
-        <Image
-          ref={imgEl}
-          borderRadius="60%"
-          width="40px"
-          height="25px"
-          src={imgSrc}
-          onError={imgError}
-          alt="profile"
-        ></Image>
+        <Box width="40px" height="40px">
+          <Image
+            borderRadius="60%"
+            ref={imgEl}
+            src={imgSrc}
+            onError={imgError}
+            alt="profile"
+          ></Image>
+        </Box>
       </Box>
       <Box>
         <Box
