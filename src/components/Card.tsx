@@ -29,7 +29,13 @@ export const Card: React.FC<CardProps> = ({
     return true;
   }
   return (
-    <Box display="flex" padding="15px" border="1px solid #F5F7F9" width="550px">
+    <Box
+      display="flex"
+      padding="15px"
+      border="1px solid #F5F7F9"
+      width="550px"
+      cursor="pointer"
+    >
       <Box padding="10px">
         <Box width="40px" height="40px">
           <Image
@@ -50,7 +56,7 @@ export const Card: React.FC<CardProps> = ({
           justifyContent="space-between"
         >
           <Box color="#8F9EAB">{link}</Box>
-          <Box>{formatedDate}</Box>
+          <Box color="#A1D3EF">{formatedDate}</Box>
         </Box>
         <Box className="content">
           <Box textStyle="h1" fontWeight="bold" fontSize="18px">

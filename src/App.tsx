@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Card } from "./components/Card";
-import { List, ListItem, Container } from "@chakra-ui/react";
+import { List, ListItem, Container, Link } from "@chakra-ui/react";
 
 const account_id = "661072_53ca2jsh01c88c4wwkc0wockckk0w4440o4o0w8wkkgco4o888";
 const alert_id = 1214654;
@@ -14,6 +14,7 @@ type Mention = {
   picture_url: string;
   created_at: string;
   source_url: string;
+  original_url: string;
 };
 
 function App() {
@@ -36,15 +37,18 @@ function App() {
       picture_url,
       created_at,
       source_url,
+      original_url,
     }) => (
       <ListItem key={id}>
-        <Card
-          date={created_at}
-          imgSrc={picture_url}
-          title={description_short}
-          description={description_medium}
-          link={source_url.split("/")[2]}
-        ></Card>
+        <Link href={original_url} isExternal>
+          <Card
+            date={created_at}
+            imgSrc={picture_url}
+            title={description_short}
+            description={description_medium}
+            link={source_url.split("/")[2]}
+          ></Card>
+        </Link>
       </ListItem>
     )
   );
