@@ -5,8 +5,6 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { ChakraProvider } from "@chakra-ui/react";
 
-// 2. Define the new text styles
-
 ReactDOM.render(
   <React.StrictMode>
     <ChakraProvider>

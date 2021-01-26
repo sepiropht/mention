@@ -18,7 +18,7 @@ export const Card: React.FC<CardProps> = ({
   link,
 }) => {
   //console.log(dayjs("2020-12-31T06:30:19.79103600+00:00").toString());
-  const formatedDate = "25 feb";
+  const formatedDate = dayjs(date).format("DD MMM");
   const imgEl = useRef<HTMLImageElement>(null);
 
   function imgError() {
