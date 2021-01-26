@@ -9,6 +9,11 @@ const token =
 
 type Mention = {
   id: string;
+  description_short: string;
+  description_medium: string;
+  picture_url: string;
+  created_at: string;
+  source_url: string;
 };
 
 function App() {
@@ -23,11 +28,26 @@ function App() {
         setMentions(data.mentions);
       });
   }, []);
-  const items = mentions.map((mention) => (
-    <ListItem key={mention.id}>
-      <Card img={""} date={""}></Card>
-    </ListItem>
-  ));
+  const items = mentions.map(
+    ({
+      description_short,
+      id,
+      description_medium,
+      picture_url,
+      created_at,
+      source_url,
+    }) => (
+      <ListItem key={id}>
+        <Card
+          date={created_at}
+          imgSrc={picture_url}
+          title={description_short}
+          description={description_medium}
+          link={source_url.split("/")[2]}
+        ></Card>
+      </ListItem>
+    )
+  );
   return (
     <Container>
       <List>{items}</List>
