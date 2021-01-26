@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Card } from "./components/Card";
-import { List, ListItem, Container, Link } from "@chakra-ui/react";
+import { List, ListItem, Container, Link, Spinner } from "@chakra-ui/react";
+import { useBottomScrollListener } from "react-bottom-scroll-listener";
 
 const account_id = "661072_53ca2jsh01c88c4wwkc0wockckk0w4440o4o0w8wkkgco4o888";
 const alert_id = 1214654;
@@ -19,16 +20,30 @@ type Mention = {
 
 function App() {
   const [mentions, setMentions] = useState<Array<Mention>>([]);
-  useEffect(() => {
-    fetch(
-      `/api/accounts/${account_id}/alerts/${alert_id}/mentions?access_token=${token}`
-    )
+  const [fetchLink, setFetchLink] = useState<string>(
+    `/api/accounts/${account_id}/alerts/${alert_id}/mentions?access_token=${token}`
+  );
+  const [showSpinner, setSpinner] = useState(true);
+
+  const fetchMentions = useCallback(() => {
+    setSpinner(true);
+    fetch(fetchLink)
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
-        setMentions(data.mentions);
+        if (!data._links.more) {
+          setSpinner(false);
+          return;
+        }
+        setMentions([...mentions, ...data.mentions]);
+        setFetchLink(`${data._links.more.href}&access_token=${token}`);
+        setSpinner(false);
       });
-  }, []);
+  }, [fetchLink, mentions]);
+
+  useBottomScrollListener(fetchMentions);
+  useEffect(fetchMentions, []);
+
   const items = mentions.map(
     ({
       description_short,
@@ -53,8 +68,9 @@ function App() {
     )
   );
   return (
-    <Container>
+    <Container textAlign="center">
       <List>{items}</List>
+      {showSpinner && <Spinner textAlign="center" size="xl" />}
     </Container>
   );
 }

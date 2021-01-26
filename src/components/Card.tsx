@@ -17,7 +17,6 @@ export const Card: React.FC<CardProps> = ({
   description,
   link,
 }) => {
-  //console.log(dayjs("2020-12-31T06:30:19.79103600+00:00").toString());
   const formatedDate = dayjs(date).format("DD MMM");
   const imgEl = useRef<HTMLImageElement>(null);
 
@@ -35,6 +34,7 @@ export const Card: React.FC<CardProps> = ({
       border="1px solid #F5F7F9"
       width="550px"
       cursor="pointer"
+      textAlign="left"
     >
       <Box padding="10px">
         <Box width="40px" height="40px">
@@ -47,7 +47,7 @@ export const Card: React.FC<CardProps> = ({
           ></Image>
         </Box>
       </Box>
-      <Box>
+      <Box width="100%">
         <Box
           className="header"
           display="flex"
