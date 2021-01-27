@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState, useRef } from "react";
 import { Card } from "./components/Card";
 import { List, ListItem, Container, Link, Spinner } from "@chakra-ui/react";
 import { useBottomScrollListener } from "react-bottom-scroll-listener";
@@ -24,6 +24,7 @@ function App() {
     `/api/accounts/${account_id}/alerts/${alert_id}/mentions?access_token=${token}`
   );
   const [showSpinner, setSpinner] = useState(true);
+  const calledOnce = useRef<boolean>(false);
 
   const fetchMentions = useCallback(() => {
     setSpinner(true);
@@ -42,7 +43,11 @@ function App() {
   }, [fetchLink, mentions]);
 
   useBottomScrollListener(fetchMentions);
-  useEffect(fetchMentions, []);
+  useEffect(() => {
+    if (calledOnce.current) return;
+    fetchMentions();
+    calledOnce.current = true;
+  }, [fetchMentions]);
 
   const items = mentions.map(
     ({
